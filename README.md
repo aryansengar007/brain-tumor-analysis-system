@@ -276,3 +276,8 @@ GET /get-local-ip
 - Explainable AI visualizations
 
 ---
+© 2025 Aryan Sengar – All Rights Reserved  
+Unauthorized copying is strictly prohibited.
+---
+
+> 💬 *Feel free to drop a ⭐ if you find this helpful!*
