@@ -1,8 +1,9 @@
 from fastapi import FastAPI, File, UploadFile, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import StreamingResponse
+from fastapi.responses import JSONResponse, StreamingResponse
 from pydantic import BaseModel
 import socket
+import traceback
 import numpy as np
 import cv2
 import tensorflow as tf
@@ -303,11 +304,19 @@ async def predict_full_endpoint(file: UploadFile = File(...)):
 
 @app.post("/generate-report")
 async def generate_report_endpoint(request: ReportRequest):
+    payload = request.dict()
     try:
-        # Generate PDF report
-        pdf_bytes = generate_pdf_report(request.dict())
+        print("Report request received at /generate-report")
+        print("Payload keys:", list(payload.keys()))
+        if payload.get("original_image"):
+            print("Original image length:", len(payload.get("original_image")))
+        if payload.get("segmentation_mask"):
+            print("Segmentation mask length:", len(payload.get("segmentation_mask")))
 
-        # Return PDF as streaming response
+        print("Generating report...")
+        pdf_bytes = generate_pdf_report(payload)
+        print("PDF generated successfully. Size:", len(pdf_bytes), "bytes")
+
         return StreamingResponse(
             io.BytesIO(pdf_bytes),
             media_type="application/pdf",
@@ -316,8 +325,11 @@ async def generate_report_endpoint(request: ReportRequest):
             },
         )
     except Exception as e:
-        raise HTTPException(
-            status_code=500, detail=f"Report generation failed: {str(e)}"
+        print("REPORT ERROR:", str(e))
+        traceback.print_exc()
+        return JSONResponse(
+            status_code=500,
+            content={"error": str(e)},
         )
 
 

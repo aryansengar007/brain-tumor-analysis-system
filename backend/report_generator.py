@@ -1,5 +1,6 @@
 import io
 import uuid
+import traceback
 from datetime import datetime
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import letter, A4
@@ -74,7 +75,7 @@ def generate_pdf_report(data):
     story = []
 
     # HEADER
-    story.append(Paragraph("Brain Tumor AI Diagnostic System", title_style))
+    story.append(Paragraph("Brain Tumor Analysis System", title_style))
     story.append(Spacer(1, 0.5 * inch))
 
     # Report Info
@@ -84,7 +85,6 @@ def generate_pdf_report(data):
     header_data = [
         ["Report ID:", report_id],
         ["Date & Time:", current_time.strftime("%Y-%m-%d %H:%M:%S")],
-        ["System Version:", "1.0.0"],
     ]
 
     header_table = Table(header_data, colWidths=[2 * inch, 4 * inch])
@@ -156,11 +156,11 @@ def generate_pdf_report(data):
     story.append(Paragraph("ANALYSIS RESULTS", section_style))
 
     binary_result = data.get("result", "N/A")
-    confidence = data.get("confidence", 0)
+    confidence = float(data.get("confidence", 0) or 0)
 
     analysis_data = [
         ["Binary Classification:", binary_result],
-        ["Confidence Score:", ".1f"],
+        ["Confidence Score:", f"{confidence:.1f}%"],
     ]
 
     analysis_table = Table(analysis_data, colWidths=[2 * inch, 4 * inch])
@@ -207,7 +207,11 @@ def generate_pdf_report(data):
             story.append(Spacer(1, 0.1 * inch))
             prob_data = [["Type", "Probability"]]
             for tumor_type_name, prob in probabilities.items():
-                prob_data.append([tumor_type_name.capitalize(), ".1f"])
+                try:
+                    prob_value = float(prob or 0)
+                except Exception:
+                    prob_value = 0.0
+                prob_data.append([tumor_type_name.capitalize(), f"{prob_value:.1f}%"])
 
             prob_table = Table(prob_data, colWidths=[2 * inch, 2 * inch])
             prob_table.setStyle(
@@ -231,10 +235,19 @@ def generate_pdf_report(data):
     # SEGMENTATION ANALYSIS
     story.append(Paragraph("SEGMENTATION ANALYSIS", section_style))
 
-    tumor_area = data.get("tumor_area", 0)
+    tumor_area = float(data.get("tumor_area", 0) or 0)
     size_category = data.get("size_category", "N/A")
 
-    seg_data = [["Tumor Area:", ".1f"], ["Size Category:", size_category]]
+    if str(binary_result).strip().lower() == "healthy":
+        seg_data = [
+            ["Tumor Area:", "0.0%"],
+            ["Size Category:", "No Tumor Detected"],
+        ]
+    else:
+        seg_data = [
+            ["Tumor Area:", f"{tumor_area:.1f}%"],
+            ["Size Category:", size_category],
+        ]
 
     seg_table = Table(seg_data, colWidths=[2 * inch, 4 * inch])
     seg_table.setStyle(
@@ -286,6 +299,8 @@ def generate_pdf_report(data):
             story.append(Image(img_buffer, width=3 * inch, height=3 * inch))
             story.append(Spacer(1, 0.1 * inch))
         except Exception as e:
+            print(f"Original image decode error: {e}")
+            traceback.print_exc()
             story.append(Paragraph("Original image could not be loaded.", normal_style))
 
     if segmentation_mask:
@@ -296,7 +311,11 @@ def generate_pdf_report(data):
                 story.append(Paragraph("Segmentation Overlay:", styles["Heading4"]))
                 story.append(Image(overlay_img, width=3 * inch, height=3 * inch))
                 story.append(Spacer(1, 0.1 * inch))
+            else:
+                print("Segmentation overlay not created: invalid or empty mask data.")
         except Exception as e:
+            print(f"Segmentation overlay error: {e}")
+            traceback.print_exc()
             story.append(
                 Paragraph("Segmentation overlay could not be created.", normal_style)
             )
@@ -321,7 +340,7 @@ def generate_pdf_report(data):
     story.append(Paragraph("DISCLAIMER", section_style))
 
     disclaimer = """
-    This AI diagnostic system is designed to assist healthcare professionals in the analysis of brain scans.
+    This system is designed to assist healthcare professionals in the analysis of brain scans.
     The results provided are for informational purposes only and should not be considered as a definitive diagnosis.
     All findings should be reviewed and confirmed by qualified medical professionals.
     This system is not a replacement for professional medical judgment, clinical examination, or laboratory testing.
@@ -341,14 +360,19 @@ def generate_pdf_report(data):
 
     story.append(
         Paragraph(
-            "Developed by Aryan Sengar | Brain Tumor AI Diagnostic System v1.0.0",
+            "Developed by Aryan Sengar | Brain Tumor Analysis System",
             footer_style,
         )
     )
     story.append(Paragraph("For research and educational purposes only", footer_style))
 
     # Build PDF
-    doc.build(story)
+    try:
+        doc.build(story)
+    except Exception as e:
+        print("PDF BUILD ERROR:", e)
+        traceback.print_exc()
+        raise
 
     # Get PDF bytes
     pdf_bytes = buffer.getvalue()
@@ -360,6 +384,9 @@ def generate_pdf_report(data):
 def create_segmentation_overlay(original_image_b64, mask_b64):
     """Create an overlay image combining original and segmentation mask"""
     try:
+        if not original_image_b64:
+            raise ValueError("Original image data is missing for overlay generation.")
+
         # Decode original image
         orig_data = base64.b64decode(
             original_image_b64.split(",")[1]
@@ -369,7 +396,9 @@ def create_segmentation_overlay(original_image_b64, mask_b64):
         orig_img = PILImage.open(io.BytesIO(orig_data))
 
         # Decode mask
-        mask_data = base64.b64decode(mask_b64)
+        mask_data = base64.b64decode(
+            mask_b64.split(",")[1] if "," in mask_b64 else mask_b64
+        )
         mask_img = PILImage.open(io.BytesIO(mask_data))
 
         # Ensure same size
@@ -393,15 +422,16 @@ def create_segmentation_overlay(original_image_b64, mask_b64):
         return buffer
     except Exception as e:
         print(f"Error creating overlay: {e}")
+        traceback.print_exc()
         return None
 
 
 def generate_medical_interpretation(data):
     """Generate automated medical interpretation text"""
     result = data.get("result", "Unknown")
-    confidence = data.get("confidence", 0)
+    confidence = float(data.get("confidence", 0))
     tumor_type = data.get("tumor_type", "")
-    tumor_area = data.get("tumor_area", 0)
+    tumor_area = float(data.get("tumor_area", 0))
     size_category = data.get("size_category", "")
 
     if result == "Healthy":
