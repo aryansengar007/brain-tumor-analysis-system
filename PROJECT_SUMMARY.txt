@@ -1,0 +1,11 @@
+Brain Tumor Analysis System is an AI-powered medical imaging project that uses TensorFlow models and a React+FastAPI stack to detect brain tumors, classify tumor types, segment tumor regions, and generate PDF reports.
+
+Key points:
+- Binary tumor detection using a custom CNN
+- Tumor type classification via MobileNetV2 transfer learning
+- Tumor segmentation with a U-Net-style model
+- Frontend dashboard with batch analysis and QR sharing
+- Backend API exposing prediction and report endpoints
+- Dataset includes binary MRI/CT scans, tumor-type images, and segmentation masks
+- History is stored in browser localStorage
+- No server-side database is included
