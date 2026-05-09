@@ -71,6 +71,7 @@ Built using React, FastAPI, TensorFlow, and advanced Deep Learning architectures
  [![Fie Screenshot](assets/file_3.png)](assets/file_3.png)
  [![Fie Screenshot](assets/file_4.png)](assets/file_4.png)
  [![Fie Screenshot](assets/file_5.png)](assets/file_5.png)
+ [![Fie Screenshot](assets/file_6.png)](assets/file_6.png)
  
 ---
 
