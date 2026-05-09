@@ -57,34 +57,46 @@ const AnalyzePage = () => {
     try {
       const reportData = {
         patient_name: patientDetails.name,
-        age: parseInt(patientDetails.age),
+        age: parseInt(patientDetails.age, 10),
         gender: patientDetails.gender,
         scan_type: "MRI",
         image_filename: selectedFile?.name || "brain_scan.png",
         original_image: imagePreview,
         result: results.binary?.result || "Unknown",
-        confidence: results.binary?.confidence || 0,
+        confidence: results.binary?.confidence ?? 0,
         tumor_type: results.type?.result || null,
         probabilities: results.type?.probabilities || null,
-        tumor_area: results.segmentation?.area || null,
-        size_category: results.size_category || null,
-        segmentation_mask: results.segmentation?.mask ? `data:image/png;base64,${results.segmentation.mask}` : null
+        tumor_area: results.segmentation?.tumor_area_percent ?? null,
+        size_category: results.size_category ?? null,
+        segmentation_mask: results.segmentation?.mask ? `data:image/png;base64,${results.segmentation.mask}` : null,
       };
 
+      console.log('Report request payload:', {
+        keys: Object.keys(reportData),
+        tumor_area: reportData.tumor_area,
+        has_segmentation_mask: Boolean(reportData.segmentation_mask),
+        has_original_image: Boolean(reportData.original_image),
+      });
+
       const pdfBlob = await generateReport(reportData);
-      
+
       // Create download link
       const url = URL.createObjectURL(pdfBlob);
       const a = document.createElement('a');
       a.href = url;
       a.download = `medical-report-${patientDetails.name.replace(/\s+/g, '-')}-${Date.now()}.pdf`;
+      document.body.appendChild(a);
       a.click();
+      a.remove();
       URL.revokeObjectURL(url);
-      
+
       toast.success('Medical report downloaded successfully!');
     } catch (error) {
       toast.error('Failed to generate report. Please try again.');
-      console.error(error);
+      console.error('Report download failed:', error);
+      if (error.response) {
+        console.error('Backend response:', error.response);
+      }
     } finally {
       setLoading(false);
     }
