@@ -54,8 +54,25 @@ export const predictFull = async (file) => {
 };
 
 export const generateReport = async (reportData) => {
+  console.log('generateReport payload keys:', Object.keys(reportData));
+  console.log('generateReport payload flags:', {
+    tumor_area: reportData.tumor_area,
+    has_segmentation_mask: Boolean(reportData.segmentation_mask),
+    has_original_image: Boolean(reportData.original_image),
+  });
+
   const response = await axios.post(`${API_BASE_URL}/generate-report`, reportData, {
     responseType: 'blob', // Important for downloading files
   });
+
+  console.log('generateReport response status:', response.status);
+  console.log('generateReport response content-type:', response.headers['content-type']);
+
+  const contentType = response.headers['content-type'] || '';
+  if (!contentType.includes('application/pdf')) {
+    const errorText = await new Response(response.data).text();
+    throw new Error(`Report generation failed: ${errorText}`);
+  }
+
   return response.data;
 };
