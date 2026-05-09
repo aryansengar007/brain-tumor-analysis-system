@@ -47,29 +47,30 @@ Built using React, FastAPI, TensorFlow, and advanced Deep Learning architectures
 
 ## 🖥️ Demo Screenshots
  
- # Dashboard 
+ # Login Page 
+ [![Dashboard Screenshot](assets/page_1.png)](assets/page_1.png)
+ [![Dashboard Screenshot](assets/page_2.png)](assets/page_2.png)
+
+ # Dashboard Page 
  [![Dashboard Screenshot](assets/dashboard_1.png)](assets/dashboard_1.png)
  [![Dashboard Screenshot](assets/dashboard_2.png)](assets/dashboard_2.png)
  [![Dashboard Screenshot](assets/dashboard_3.png)](assets/dashboard_3.png)
-
- # Classification Result
- [![Result Screenshot](assets/prediction_result_1_1.1.png)](assets/prediction_result_1_1.1.png)
- [![Result Screenshot](assets/prediction_result_1_1.2.png)](assets/prediction_result_1_1.2.png)
- [![Result Screenshot](assets/prediction_result_1_1.3.png)](assets/prediction_result_1_1.3.png)
- [![Result Screenshot](assets/prediction_result_1_1.4.png)](assets/prediction_result_1_1.4.png)
- [![Result Screenshot](assets/prediction_result_1_1.5.png)](assets/prediction_result_1_1.5.png)
- [![Result Screenshot](assets/prediction_result_1_1.6.png)](assets/prediction_result_1_1.6.png)
- [![Result Screenshot](assets/prediction_result_1_1.7.png)](assets/prediction_result_1_1.7.png)
- [![Result Screenshot](assets/prediction_result_2.png)](assets/prediction_result_2.png)
- [![Result Screenshot](assets/prediction_result_3.png)](assets/prediction_result_3.png)
+ [![Dashboard Screenshot](assets/dashboard_4.png)](assets/dashboard_4.png)
+ [![Dashboard Screenshot](assets/dashboard_5.png)](assets/dashboard_5.png)
+ 
+ # Scan Result
+ [![Result Screenshot](assets/result_1.png)](assets/result_1.png)
+ [![Result Screenshot](assets/result_2.png)](assets/result_2.png)
+ [![Result Screenshot](assets/result_3.png)](assets/result_3.png)
+ [![Result Screenshot](assets/result_4.png)](assets/result_4.png)
+ [![Result Screenshot](assets/result_5.png)](assets/result_5.png)
 
  # Generated File
- [![Fie Screenshot](assets/file_preview_1.1.png)](assets/file_preview_1.1.png)
- [![Fie Screenshot](assets/file_preview_1.2.png)](assets/file_preview_1.2.png)
- [![Fie Screenshot](assets/file_preview_1.3.png)](assets/file_preview_1.3.png)
- [![Fie Screenshot](assets/file_preview_1.4.png)](assets/file_preview_1.4.png)
- [![Fie Screenshot](assets/file_preview_1.5.png)](assets/file_preview_1.5.png)
- [![Fie Screenshot](assets/file_preview_2.png)](assets/file_preview_2.png)
+ [![Fie Screenshot](assets/file_1.png)](assets/file_1.png)
+ [![Fie Screenshot](assets/file_2.png)](assets/file_2.png)
+ [![Fie Screenshot](assets/file_3.png)](assets/file_3.png)
+ [![Fie Screenshot](assets/file_4.png)](assets/file_4.png)
+ [![Fie Screenshot](assets/file_5.png)](assets/file_5.png)
  
 ---
 
