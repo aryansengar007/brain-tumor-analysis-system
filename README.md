@@ -66,12 +66,12 @@ Built using React, FastAPI, TensorFlow, and advanced Deep Learning architectures
  [![Result Screenshot](assets/result_5.png)](assets/result_5.png)
 
  # Generated File
- [![Fie Screenshot](assets/file_1.png)](assets/file_1.png)
- [![Fie Screenshot](assets/file_2.png)](assets/file_2.png)
- [![Fie Screenshot](assets/file_3.png)](assets/file_3.png)
- [![Fie Screenshot](assets/file_4.png)](assets/file_4.png)
- [![Fie Screenshot](assets/file_5.png)](assets/file_5.png)
- [![Fie Screenshot](assets/file_6.png)](assets/file_6.png)
+ [![File Screenshot](assets/file_1.png)](assets/file_1.png)
+ [![File Screenshot](assets/file_2.png)](assets/file_2.png)
+ [![File Screenshot](assets/file_3.png)](assets/file_3.png)
+ [![File Screenshot](assets/file_4.png)](assets/file_4.png)
+ [![File Screenshot](assets/file_5.png)](assets/file_5.png)
+ [![File Screenshot](assets/file_6.png)](assets/file_6.png)
  
 ---
 
