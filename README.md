@@ -216,7 +216,7 @@ brain-tumor-analysis-system/
 ├── datasets/
 │   ├── binary_dataset/
 │   ├── tumor_type_dataset/
-│   └── brats_dataset/
+│   └── segmentation_dataset/
 │
 └── assets/                      # README screenshots
 ```
@@ -234,7 +234,7 @@ brain-tumor-analysis-system/
 ### 1 · Clone the Repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/brain-tumor-analysis-system.git
+git clone https://github.com/aryansengar007/brain-tumor-analysis-system.git
 cd brain-tumor-analysis-system
 ```
 
@@ -326,14 +326,12 @@ npm run dev
 <div align="center">
 
 **Aryan Sengar**
-B.Tech Computer Science & Engineering · Roll No. 23CSU055
-
-*Mentor: Dr. Ashima Rani*
+B.Tech Computer Science & Engineering
 
 <br/>
 
-[![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/YOUR_USERNAME)
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/YOUR_PROFILE)
+[![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/aryansengar007)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://linkedin.com/in/aryan-sengar-786b96290)
 
 </div>
 
